@@ -31,8 +31,17 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to, _from, next) => {
+router.beforeEach(async (to, _from, next) => {
   const session = useSessionStore();
+  if (session.token && !session.username) {
+    try {
+      await session.loadProfile();
+    } catch (error) {
+      console.error("Failed to hydrate session", error);
+      session.signOut();
+    }
+  }
+
   if (to.name !== "login" && !session.isAuthenticated) {
     next({ name: "login" });
   } else {
