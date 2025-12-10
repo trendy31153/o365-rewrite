@@ -7,7 +7,7 @@ export const useSessionStore = defineStore("session", () => {
   const username = ref<string | null>(localStorage.getItem("username"));
   const roles = ref<string[]>(JSON.parse(localStorage.getItem("roles") || "[]"));
 
-  const isAuthenticated = computed(() => Boolean(token.value));
+  const isAuthenticated = computed(() => Boolean(token.value && username.value));
 
   async function signIn(user: string, password: string) {
     const response = await login(user, password);

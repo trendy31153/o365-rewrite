@@ -42,7 +42,7 @@ router.beforeEach(async (to, _from, next) => {
     }
   }
 
-  if (to.name !== "login" && !session.isAuthenticated) {
+  if (to.name !== "login" && !session.isAuthenticated.value) {
     next({ name: "login" });
   } else {
     next();
