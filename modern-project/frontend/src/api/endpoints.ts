@@ -5,6 +5,11 @@ export async function login(username: string, password: string) {
   return data as { access_token: string; token_type: string };
 }
 
+export async function fetchProfile() {
+  const { data } = await api.get("/auth/me");
+  return data as { username: string; roles: string[] };
+}
+
 export async function listTenants() {
   const { data } = await api.get("/tenants/");
   return data;
