@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
 import { useSessionStore } from "../stores/session";
 
 const router = useRouter();
@@ -31,6 +32,9 @@ async function submit() {
   try {
     await session.signIn(username.value, password.value);
     router.push("/");
+  } catch (error: any) {
+    const detail = error?.response?.data?.detail || "Login failed. Check credentials and API connectivity.";
+    ElMessage.error(detail);
   } finally {
     loading.value = false;
   }
