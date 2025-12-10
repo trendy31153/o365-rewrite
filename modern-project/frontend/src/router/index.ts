@@ -33,7 +33,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, _from, next) => {
   const session = useSessionStore();
-  if (session.token && !session.username) {
+  if (session.token.value && !session.username.value) {
     try {
       await session.loadProfile();
     } catch (error) {

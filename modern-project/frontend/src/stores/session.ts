@@ -15,7 +15,12 @@ export const useSessionStore = defineStore("session", () => {
     username.value = user;
     localStorage.setItem("token", token.value);
     localStorage.setItem("username", user);
-    await loadProfile();
+    try {
+      await loadProfile();
+    } catch (error) {
+      signOut();
+      throw error;
+    }
   }
 
   function signOut() {
